@@ -1,17 +1,17 @@
-<script>
+<script lang="ts">
     import trimStart from "lodash/trimStart";
     import trimEnd from "lodash/trimEnd";
     import truncate from "lodash/truncate";
 
-    export let title;
-    export let id;
-    export let location;
-    export let department;
-    export let excerpt;
-    export let href;
-    export let region;
+    export let title: string;
+    export let id: string;
+    export let location: string;
+    export let department: string;
+    export let excerpt: string;
+    export let href: string;
+    export let region: string;
 
-    let cleanedExcerpt = trimStart(excerpt, "<p>");
+    let cleanedExcerpt: string = trimStart(excerpt, "<p>");
     cleanedExcerpt = trimEnd(cleanedExcerpt, "</p>\n");
     cleanedExcerpt = truncate(cleanedExcerpt, { length: 256 });
 </script>

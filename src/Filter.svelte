@@ -1,11 +1,11 @@
-<script>
+<script lang="ts">
     import { slide } from "svelte/transition";
 
-    export let title;
-    export let filters;
-    export let active = [];
+    export let title: string;
+    export let items: string[];
+    export let active: string[];
 
-    export let open = true;
+    let open = true;
 </script>
 
 <dl>
@@ -41,16 +41,16 @@
     <dd>
         {#if open}
             <ul transition:slide={{ duration: 200 }}>
-                {#each filters as filter}
+                {#each items as item (item)}
                     <li>
                         <label>
                             <input
                                 type="checkbox"
                                 bind:group={active}
                                 name={title}
-                                value={filter}
+                                value={item}
                             />
-                            {filter}
+                            {item}
                         </label>
                     </li>
                 {/each}
