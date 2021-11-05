@@ -14,6 +14,11 @@ export interface JobOpeningData extends ListItemData {
     region: string;
 }
 
+export interface ResourceData extends ListItemData {
+    products: string[];
+    type: string;
+}
+
 export type ListFilter = {
     name: string;
     items: string[];

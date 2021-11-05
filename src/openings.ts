@@ -1,6 +1,7 @@
 import trimStart from "lodash/trimStart";
 import trimEnd from "lodash/trimEnd";
 import truncate from "lodash/truncate";
+import { decode } from "html-entities";
 import type { JobOpeningData, ListFilter } from "./types";
 
 export const apiUrl = encodeURI(
@@ -12,10 +13,11 @@ export function dataHandler(data: any): JobOpeningData[] {
         let excerpt: string = trimStart(post.excerpt.rendered, "<p>");
         excerpt = trimEnd(excerpt, "</p>\n");
         excerpt = truncate(excerpt, { length: 250 });
+        excerpt = decode(excerpt);
 
         return {
             id: post.acf.job_id,
-            title: post.title.rendered,
+            title: decode(post.title.rendered),
             smallTitle: post.acf.job_id,
             href: post.link,
             subtitle: `${post.acf.job_region} | ${post.acf.job_department} | ${post.acf.job_location}`,
@@ -46,7 +48,7 @@ export function getFilters(items: JobOpeningData[]): ListFilter[] {
     });
 }
 
-export function getDisplayedItems(
+export function getActiveItems(
     items: JobOpeningData[],
     filters: ListFilter[]
 ): JobOpeningData[] {

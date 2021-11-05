@@ -5,7 +5,7 @@
         dataHandler,
         getFilters,
         getActiveItems,
-    } from "./openings";
+    } from "./resources";
 
     let promise = fetch(apiUrl)
         .then((response) => response.json())
