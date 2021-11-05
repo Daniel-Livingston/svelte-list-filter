@@ -1,5 +1,5 @@
 <script lang="ts">
-    import JobOpenings from "./JobOpenings.svelte";
+    import Resources from "./Resources.svelte";
 </script>
 
-<JobOpenings />
+<Resources />

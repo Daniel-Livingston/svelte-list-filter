@@ -5,14 +5,25 @@
 
     export let items: ListItemData[] = [];
     export let filters: ListFilter[] = [];
-    export let getDisplayedItems: (
+    export let getActiveItems: (
         items: ListItemData[],
         filters: ListFilter[]
     ) => ListItemData[];
 
+    let maxDisplayed: number = 10;
     let filtersOpen: boolean = false;
+    let activeItems: ListItemData[] = [];
+    $: activeItems = getActiveItems(items, filters);
+
     let displayedItems: ListItemData[] = [];
-    $: displayedItems = getDisplayedItems(items, filters);
+    $: displayedItems = activeItems.slice(0, maxDisplayed);
+
+    let canShowMore: boolean = false;
+    $: canShowMore = activeItems.length > maxDisplayed;
+
+    function showMore() {
+        maxDisplayed += 10;
+    }
 
     function resetActiveFilters() {
         filters.forEach((filter) => {
@@ -29,7 +40,7 @@
         bind:mobileOpen={filtersOpen}
         {resetActiveFilters}
     />
-    <List items={displayedItems} bind:filtersOpen />
+    <List items={displayedItems} bind:filtersOpen {canShowMore} {showMore} />
 </div>
 
 <style>
