@@ -1,41 +1,20 @@
 <script lang="ts">
     import { slide } from "svelte/transition";
+    import capitalize from "lodash/capitalize";
+    import ToggleIcon from "./ToggleIcon.svelte";
 
-    export let title: string;
+    export let name: string;
     export let items: string[];
     export let active: string[];
 
-    let open = true;
+    let open: boolean = true;
 </script>
 
 <dl>
     <dt>
         <button on:click={() => (open = !open)}>
-            {title}
-            {#if open}
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    viewBox="0 0 16 16"
-                >
-                    <path
-                        d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
-                    />
-                </svg>
-            {:else}
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    viewBox="0 0 16 16"
-                >
-                    <path
-                        d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
-                    />
-                </svg>{/if}
+            {capitalize(name)}
+            <ToggleIcon {open} />
         </button>
     </dt>
     <dd>
@@ -47,7 +26,7 @@
                             <input
                                 type="checkbox"
                                 bind:group={active}
-                                name={title}
+                                {name}
                                 value={item}
                             />
                             {item}

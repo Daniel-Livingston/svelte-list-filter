@@ -1,10 +1,11 @@
 <script lang="ts">
-    export let items: any[];
-    export let filtersOpen: boolean;
-
-    import Opening from "./Opening.svelte";
+    import Item from "./Item.svelte";
     import { flip } from "svelte/animate";
     import { fade } from "svelte/transition";
+    import type { ListItemData } from "../../types";
+
+    export let items: ListItemData[];
+    export let filtersOpen: boolean;
 </script>
 
 <div class="items">
@@ -13,9 +14,9 @@
         on:click={() => (filtersOpen = true)}>Open Filters</button
     >
 
-    {#each items as opening (opening.id)}
+    {#each items as item (item.id)}
         <div animate:flip={{ duration: 300 }} in:fade={{ duration: 200 }}>
-            <Opening {...opening} />
+            <Item {...item} />
         </div>
     {/each}
 </div>
