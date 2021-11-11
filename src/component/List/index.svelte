@@ -65,6 +65,31 @@
         transform: translateY(20%);
     }
 
+    .show-more-bar {
+        display: flex;
+        justify-content: center;
+    }
+
+    .show-more-bar > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .show-more-bar button {
+        background: none;
+        border: none;
+    }
+
+    .show-more-bar button :global(svg) {
+        transition: transform 0.3s;
+    }
+
+    .show-more-bar button:hover :global(svg),
+    .show-more-bar button:focus :global(svg) {
+        transform: translateY(20%);
+    }
+
     /* Tablet and Desktop styles */
     @media screen and (min-width: 980px) {
         button.open {
