@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Resources from "./Resources.svelte";
+    import PressReleases from "./PressReleases.svelte";
 </script>
 
-<Resources />
+<PressReleases />

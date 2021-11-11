@@ -44,10 +44,15 @@ export function dataHandler(data: any): ResourceData[] {
         return {
             id: post.id,
             title: decode(post.title.rendered),
-            href: post.link,
+            href: post.acf.url ? post.acf.url : post.link,
             subtitle: `${products.join(", ")} | ${type}`,
             excerpt,
-            links: [{ label: "See the full resource", href: post.link }],
+            links: [
+                {
+                    label: "See the full resource",
+                    href: post.acf.url ? post.acf.url : post.link,
+                },
+            ],
             products,
             type,
         };

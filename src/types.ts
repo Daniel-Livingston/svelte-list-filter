@@ -5,6 +5,7 @@ export interface ListItemData {
     smallTitle?: string;
     subtitle?: string;
     excerpt?: string;
+    featuredMedia?: number;
     links?: { label: string; href: string }[];
 }
 
@@ -17,6 +18,10 @@ export interface JobOpeningData extends ListItemData {
 export interface ResourceData extends ListItemData {
     products: string[];
     type: string;
+}
+
+export interface PressReleaseData extends ListItemData {
+    year: string;
 }
 
 export type ListFilter = {
