@@ -1,6 +1,6 @@
 <script lang="ts">
   import Component from "./component/index.svelte";
-  import { apiUrl, dataHandler, getFilters, getActiveItems } from "./openings";
+  import { apiUrl, dataHandler, getFilters, getActiveItems } from "./events";
 
   let promise = fetch(apiUrl)
     .then((response) => response.json())
@@ -15,5 +15,5 @@
 </script>
 
 {#await promise then data}
-  <Component items={data.items} filters={data.filters} {getActiveItems} />
+  <Component items={data.items} {getActiveItems} />
 {/await}
