@@ -16,14 +16,13 @@
 </ul>
 
 <style>
-  li + li {
-    border-top: 1px solid rgba(0, 0, 0, 0.15);
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
   }
 
-  @media screen and (min-width: 980px) {
-    ul {
-      grid-column: 2 / 3;
-      padding-left: 1rem;
-    }
+  li + li {
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
   }
 </style>

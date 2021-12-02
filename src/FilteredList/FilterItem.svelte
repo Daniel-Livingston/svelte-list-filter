@@ -8,6 +8,8 @@
 </script>
 
 <script lang="ts">
+  import { slide } from "svelte/transition";
+
   export let id: string;
   export let name: string;
   export let items: string[];
@@ -16,7 +18,7 @@
   let expanded: boolean = true;
 </script>
 
-<div>
+<div id="{id}-filter">
   <!-- The button to expand and collapse the filter item -->
   <button on:click={() => (expanded = !expanded)} aria-expanded={expanded}>
     {name}
@@ -50,15 +52,49 @@
 
   <!-- The checkboxes for the filter item. -->
   {#if expanded}
-    <ul>
+    <fieldset transition:slide>
+      <legend class="screen-reader-text">{name}</legend>
       {#each items as item (item)}
-        <li>
-          <label>
-            <input type="checkbox" bind:group={active} {name} value={item} />
-            {item}
-          </label>
-        </li>
+        <label>
+          <input type="checkbox" bind:group={active} name={id} value={item} />
+          {item}
+        </label>
       {/each}
-    </ul>
+    </fieldset>
   {/if}
 </div>
+
+<style>
+  div {
+    padding: 1rem 0;
+  }
+
+  button {
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 100%;
+    padding: 0;
+    text-align: start;
+  }
+
+  fieldset {
+    margin: 0;
+    margin-top: 1rem;
+    padding: 0;
+    border: none;
+  }
+
+  label {
+    display: block;
+    font-size: 1rem;
+  }
+
+  :global(div) + div {
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+  }
+</style>
