@@ -27,17 +27,17 @@
       excerpt = decode(excerpt);
 
       const date = new Date(post.date);
-      const formattedDate = format(date, "LLLL do, yyyy");
-      const year = format(date, "yyyy");
 
       return {
         id: post.id,
         title: decode(post.title.rendered),
         href: post.acf.url ? post.acf.url : post.link,
-        subtitle: `${formattedDate}`,
         excerpt,
         mediaId: post.featured_media,
-        year,
+        month: format(date, "MMM"),
+        day: format(date, "d"),
+        fullDate: format(date, "LLLL do, yyyy"),
+        year: format(date, "yyyy"),
       };
     });
   }

@@ -20,7 +20,11 @@
 
 <div id="{id}-filter">
   <!-- The button to expand and collapse the filter item -->
-  <button on:click={() => (expanded = !expanded)} aria-expanded={expanded}>
+  <button
+    on:click={() => (expanded = !expanded)}
+    aria-expanded={expanded}
+    aria-label="{expanded ? 'Close' : 'Open'} {name} filter"
+  >
     {name}
 
     {#if expanded}
@@ -53,7 +57,7 @@
   <!-- The checkboxes for the filter item. -->
   {#if expanded}
     <fieldset transition:slide>
-      <legend class="screen-reader-text">{name}</legend>
+      <legend class="screen-reader-text">Select the {name}</legend>
       {#each items as item (item)}
         <label>
           <input type="checkbox" bind:group={active} name={id} value={item} />
@@ -92,6 +96,10 @@
   label {
     display: block;
     font-size: 1rem;
+
+    padding: 2px 2px;
+    margin-left: 22px;
+    text-indent: -24px;
   }
 
   :global(div) + div {

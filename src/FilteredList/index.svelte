@@ -14,14 +14,14 @@
   export let getActiveItems: (
     items: ListItemType[],
     filters: FilterItemType[]
-  ) => ListItemType[];
+  ) => ListItemType[] = undefined;
 
   const increment = 10;
 
   let maxDisplayed: number = increment;
 
   $: hasFilters = filters.length > 0;
-  $: activeItems = getActiveItems(items, filters);
+  $: activeItems = getActiveItems ? getActiveItems(items, filters) : items;
   $: displayedItems = activeItems.slice(0, maxDisplayed);
   $: canShowMore = activeItems.length > maxDisplayed;
 
@@ -59,6 +59,17 @@
 </div>
 
 <style>
+  .filtered-list {
+    max-width: calc(1400px + var(--filter-width, 0px));
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .filtered-list.hasFilters {
+    --filter-width: 200px;
+  }
+
   .filtered-list :global(button) {
     cursor: pointer;
   }
@@ -88,10 +99,10 @@
   @media screen and (min-width: 980px) {
     .hasFilters {
       display: grid;
-      grid-template-columns: 200px 1fr;
+      grid-template-columns: var(--filter-width) 1fr;
     }
 
-    .list-items {
+    .list-items:not(:first-child) {
       padding-left: 1rem;
     }
   }

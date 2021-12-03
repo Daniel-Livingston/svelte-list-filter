@@ -4,9 +4,9 @@ export default async function getThumbnail(mediaId: number | string) {
   );
   const data = await response.json();
   return {
-    src: data.media_details.sizes.thumbnail.source_url as string,
+    src: data.media_details.sizes["et-pb-post-main-image"].source_url as string,
     alt: data.alt_text as string,
-    width: "150px",
-    height: "150px",
+    width: "400px",
+    height: "250px",
   };
 }

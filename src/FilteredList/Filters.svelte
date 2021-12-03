@@ -24,7 +24,10 @@
   }
 </script>
 
-<button class="open" on:click={openModal}>Open filters</button>
+<button
+  class="open et_pb_button et_pb_button_0 et_pb_bg_layout_light"
+  on:click={openModal}>Open filters</button
+>
 
 <div class:open={mobileOpen}>
   <button class="close" on:click={closeModal}>
@@ -51,13 +54,21 @@
     <FilterItem {...filter} bind:active={filter.active} />
   {/each}
 
-  <button class="reset" on:click={resetActiveFilters}>Reset all</button>
+  <button
+    class="reset et_pb_button et_pb_button_0 et_pb_bg_layout_light"
+    on:click={resetActiveFilters}>Reset all</button
+  >
 </div>
 
 <style>
   div {
     padding-right: 1rem;
     border-right: 1px solid rgba(0, 0, 0, 0.15);
+  }
+
+  button.open {
+    display: block;
+    margin-left: auto;
   }
 
   button.close {
@@ -85,9 +96,9 @@
     div.open {
       display: block;
       position: fixed;
+      width: var(--filter-width);
       top: 0;
       bottom: 0;
-      left: 20%;
       right: 0;
       background-color: #fff;
     }
