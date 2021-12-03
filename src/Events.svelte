@@ -131,7 +131,7 @@
   {/if}
 
   {#if data.past.length > 0}
-    <h2>Past Events</h2>
+    <h2 style={data.upcoming.length > 0 && "margin-top:3rem"}>Past Events</h2>
     <FilteredList items={data.past} />
   {/if}
 {/await}

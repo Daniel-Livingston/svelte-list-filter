@@ -31,7 +31,7 @@
   if (mediaId) promise = getThumbnail(mediaId);
 </script>
 
-<section>
+<article>
   {#if month && day}
     <div class="date">
       <strong class="month">{month}</strong>
@@ -39,12 +39,14 @@
     </div>
   {/if}
 
-  <div>
+  <div class="content">
     <header>
       {#if fullDate}
         <p><small>{fullDate}</small></p>
       {/if}
-      <h3 id="title-{id}" class="title"><a class="link" {href}>{title}</a></h3>
+      <h3 id="title-{id}" class="title">
+        <a class="link" {href}>{title}</a>
+      </h3>
 
       {#if subtitle}
         <p><small>{subtitle}</small></p>
@@ -69,22 +71,23 @@
       >
     {/await}
   {/if}
-</section>
+</article>
 
 <style>
-  :global(li:first-child) section {
+  :global(li:first-child) article {
     padding-top: 0;
   }
 
-  :global(li:last-child) section {
+  :global(li:last-child) article {
     padding-bottom: 0;
   }
 
-  section {
+  article {
     padding: 2rem 0;
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     gap: 1rem;
+    width: 100%;
   }
 
   .date {
@@ -93,13 +96,15 @@
     align-items: center;
     justify-content: center;
     font-size: 1.4rem;
-    padding-right: 2rem;
+    padding: 2rem;
   }
 
   .image-wrapper {
-    display: block;
+    display: flex;
+    align-items: center;
+    height: 100%;
     max-width: 400px;
-    width: 100%;
+    width: 30vw;
   }
 
   img {
@@ -127,14 +132,17 @@
   }
 
   footer {
-    display: flex;
-    justify-content: space-between;
     margin-top: 1rem;
   }
 
-  @media screen and (max-width: 768px) {
-    section {
-      flex-direction: column;
+  @media screen and (max-width: 767px) {
+    article {
+      grid-template-columns: auto 1fr;
+    }
+
+    .image-wrapper {
+      grid-column: 2;
+      width: 100%;
     }
   }
 </style>

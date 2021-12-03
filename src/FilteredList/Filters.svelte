@@ -82,7 +82,7 @@
   }
 
   /* Mobile styles */
-  @media screen and (max-width: 980px) {
+  @media screen and (max-width: 979px) {
     div {
       display: none;
       padding: 1rem;
