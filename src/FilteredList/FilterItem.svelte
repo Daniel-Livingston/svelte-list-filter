@@ -9,16 +9,18 @@
 
 <script lang="ts">
   import { slide } from "svelte/transition";
+  import DropdownIcon from "./DropdownIcon.svelte";
 
   export let id: string;
   export let name: string;
   export let items: string[];
   export let active: string[];
+  export let mobile: boolean = false;
 
   let expanded: boolean = true;
 </script>
 
-<div id="{id}-filter">
+<div id="{id}-filter" class:mobile>
   <!-- The button to expand and collapse the filter item -->
   <button
     on:click={() => (expanded = !expanded)}
@@ -27,36 +29,12 @@
   >
     {name}
 
-    {#if expanded}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
-        />
-      </svg>
-    {:else}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
-        />
-      </svg>
-    {/if}
+    <DropdownIcon {expanded} />
   </button>
 
   <!-- The checkboxes for the filter item. -->
   {#if expanded}
-    <fieldset transition:slide>
+    <fieldset transition:slide|local>
       <legend class="screen-reader-text">Select the {name}</legend>
       {#each items as item (item)}
         <label>
@@ -71,6 +49,12 @@
 <style>
   div {
     padding: 1rem 0;
+  }
+
+  div.mobile {
+    padding: 1rem;
+    flex: 1 1 10%;
+    min-width: 200px;
   }
 
   button {
@@ -88,9 +72,9 @@
 
   fieldset {
     margin: 0;
-    margin-top: 1rem;
     padding: 0;
     border: none;
+    margin-top: 0.5rem;
   }
 
   label {
@@ -102,7 +86,7 @@
     text-indent: -24px;
   }
 
-  :global(div) + div {
+  :global(div) + div:not(.mobile) {
     border-top: 1px solid rgba(0, 0, 0, 0.15);
   }
 </style>

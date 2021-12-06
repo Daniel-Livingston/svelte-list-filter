@@ -1,20 +1,12 @@
 <script lang="ts">
+  import { slide } from "svelte/transition";
   import FilterItem, { FilterItemType } from "./FilterItem.svelte";
+  import DropdownIcon from "./DropdownIcon.svelte";
 
   export let filters: FilterItemType[];
 
-  let lastFocused: Element;
   let mobileOpen: boolean = false;
-
-  function openModal() {
-    lastFocused = document.activeElement;
-    mobileOpen = true;
-  }
-
-  function closeModal() {
-    mobileOpen = false;
-    lastFocused && (lastFocused as HTMLElement).focus();
-  }
+  let w: number;
 
   function resetActiveFilters() {
     filters.forEach((filter) => {
@@ -24,32 +16,28 @@
   }
 </script>
 
-<button
-  class="open et_pb_button et_pb_button_0 et_pb_bg_layout_light"
-  on:click={openModal}>Open filters</button
->
+<svelte:window bind:innerWidth={w} />
 
-<div class:open={mobileOpen}>
-  <button class="close" on:click={closeModal}>
-    <span class="screen-reader-text">Close filters</span>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      viewBox="0 0 16 16"
-    >
-      <path
-        fill-rule="evenodd"
-        d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"
-      />
-      <path
-        fill-rule="evenodd"
-        d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"
-      />
-    </svg>
-  </button>
+{#if w < 980}
+  <div class="filters-sm">
+    <button class="toggle-mobile" on:click={() => (mobileOpen = !mobileOpen)}>
+      Open filters
+      <DropdownIcon expanded={mobileOpen} />
+    </button>
 
+    {#if mobileOpen}
+      <div transition:slide>
+        {#each filters as filter (filter.id)}
+          <FilterItem {...filter} bind:active={filter.active} mobile />
+        {/each}
+
+        <button class="reset" on:click={resetActiveFilters}>Reset all</button>
+      </div>
+    {/if}
+  </div>
+{/if}
+
+<div class="filters-lg">
   {#each filters as filter (filter.id)}
     <FilterItem {...filter} bind:active={filter.active} />
   {/each}
@@ -61,61 +49,54 @@
 </div>
 
 <style>
-  div {
+  .filters-sm {
+    margin-bottom: 1rem;
+  }
+
+  .filters-sm > div {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .filters-lg {
+    display: none;
     padding-right: 1rem;
     border-right: 1px solid rgba(0, 0, 0, 0.15);
   }
 
-  button.open {
-    display: block;
-    margin-left: auto;
-  }
-
-  button.close {
+  button.toggle-mobile {
+    display: flex;
     background: none;
     border: none;
-    float: right;
+    padding: 0.25rem 0;
+    text-decoration: underline;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .filters-sm button.reset {
+    background: none;
+    border: none;
+    text-decoration: underline;
   }
 
   button.reset {
     width: 100%;
   }
 
-  /* Mobile styles */
-  @media screen and (max-width: 979px) {
-    div {
-      display: none;
-      padding: 1rem;
-      overflow: auto;
-      -webkit-box-shadow: 0px 0px 19px 4px rgba(0, 0, 0, 0.25);
-      -moz-box-shadow: 0px 0px 19px 4px rgba(0, 0, 0, 0.25);
-      box-shadow: 0px 0px 19px 4px rgba(0, 0, 0, 0.25);
-      z-index: 1000000;
-    }
-
-    div.open {
-      display: block;
-      position: fixed;
-      width: var(--filter-width);
-      top: 0;
-      bottom: 0;
-      right: 0;
-      background-color: #fff;
-    }
-  }
-
   /* Tablet and Desktop styles */
   @media screen and (min-width: 980px) {
-    button.open {
-      display: none;
-    }
-
-    button.close {
-      display: none;
-    }
-
-    div {
+    .filters-lg {
       display: block;
+    }
+
+    button.toggle-mobile {
+      display: none;
     }
   }
 </style>

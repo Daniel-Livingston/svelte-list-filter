@@ -90,6 +90,12 @@
     width: 100%;
   }
 
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   .date {
     display: flex;
     flex-direction: column;
@@ -143,6 +149,11 @@
     .image-wrapper {
       grid-column: 2;
       width: 100%;
+    }
+
+    .date {
+      padding: 0.5rem;
+      font-size: 1rem;
     }
   }
 </style>
